@@ -4,7 +4,7 @@ services:
   provider:
     image: dtr.rogfk.no/fint-beta/provider:1.3.6
     ports:
-      - "8472:8080"
+      - "8474:8080"
     environment:
       TZ: Europe/Oslo
       server.context-path: /utdanning/timeplan/provider
@@ -28,9 +28,9 @@ services:
         window: 120s
 
   consumer:
-    image: dtr.rogfk.no/fint-beta/consumer-utdanning-timeplan:0.0.1-2.6.0-rc-1
+    image: dtr.rogfk.no/fint-beta/consumer-utdanning-timeplan:0.0.0-2.6.0-rc-1
     ports:
-      - "8473:8080"
+      - "8475:8080"
     environment:
       TZ: Europe/Oslo
       server.context-path: /utdanning/timeplan
