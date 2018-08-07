@@ -1,15 +1,22 @@
 package no.fint.consumer.models.undervisningsgruppe;
 
-import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+
 import lombok.extern.slf4j.Slf4j;
+
 import no.fint.cache.CacheService;
 import no.fint.consumer.config.Constants;
 import no.fint.consumer.config.ConsumerProps;
 import no.fint.consumer.event.ConsumerEventUtil;
 import no.fint.event.model.Event;
-import no.fint.model.relation.FintResource;
+import no.fint.event.model.ResponseStatus;
 import no.fint.model.felles.kompleksedatatyper.Identifikator;
+import no.fint.relations.FintResourceCompatibility;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -19,13 +26,20 @@ import java.util.List;
 import java.util.Optional;
 
 import no.fint.model.utdanning.timeplan.Undervisningsgruppe;
+import no.fint.model.resource.utdanning.timeplan.UndervisningsgruppeResource;
 import no.fint.model.utdanning.timeplan.TimeplanActions;
 
 @Slf4j
 @Service
-public class UndervisningsgruppeCacheService extends CacheService<FintResource<Undervisningsgruppe>> {
+public class UndervisningsgruppeCacheService extends CacheService<UndervisningsgruppeResource> {
 
     public static final String MODEL = Undervisningsgruppe.class.getSimpleName().toLowerCase();
+
+    @Value("${fint.consumer.compatibility.fintresource:true}")
+    private boolean checkFintResourceCompatibility;
+
+    @Autowired
+    private FintResourceCompatibility fintResourceCompatibility;
 
     @Autowired
     private ConsumerEventUtil consumerEventUtil;
@@ -33,8 +47,18 @@ public class UndervisningsgruppeCacheService extends CacheService<FintResource<U
     @Autowired
     private ConsumerProps props;
 
+    @Autowired
+    private UndervisningsgruppeLinker linker;
+
+    private JavaType javaType;
+
+    private ObjectMapper objectMapper;
+
     public UndervisningsgruppeCacheService() {
-        super(MODEL, TimeplanActions.GET_ALL_UNDERVISNINGSGRUPPE);
+        super(MODEL, TimeplanActions.GET_ALL_UNDERVISNINGSGRUPPE, TimeplanActions.UPDATE_UNDERVISNINGSGRUPPE);
+        objectMapper = new ObjectMapper();
+        javaType = objectMapper.getTypeFactory().constructCollectionType(List.class, UndervisningsgruppeResource.class);
+        objectMapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
     }
 
     @PostConstruct
@@ -59,11 +83,10 @@ public class UndervisningsgruppeCacheService extends CacheService<FintResource<U
     }
 
 
-    public Optional<FintResource<Undervisningsgruppe>> getUndervisningsgruppeBySystemId(String orgId, String systemId) {
-        return getOne(orgId, (fintResource) -> Optional
-                .ofNullable(fintResource)
-                .map(FintResource::getResource)
-                .map(Undervisningsgruppe::getSystemId)
+    public Optional<UndervisningsgruppeResource> getUndervisningsgruppeBySystemId(String orgId, String systemId) {
+        return getOne(orgId, (resource) -> Optional
+                .ofNullable(resource)
+                .map(UndervisningsgruppeResource::getSystemId)
                 .map(Identifikator::getIdentifikatorverdi)
                 .map(_id -> _id.equals(systemId))
                 .orElse(false));
@@ -72,7 +95,24 @@ public class UndervisningsgruppeCacheService extends CacheService<FintResource<U
 
 	@Override
     public void onAction(Event event) {
-        update(event, new TypeReference<List<FintResource<Undervisningsgruppe>>>() {
-        });
+        List<UndervisningsgruppeResource> data;
+        if (checkFintResourceCompatibility && fintResourceCompatibility.isFintResourceData(event.getData())) {
+            log.info("Compatibility: Converting FintResource<UndervisningsgruppeResource> to UndervisningsgruppeResource ...");
+            data = fintResourceCompatibility.convertResourceData(event.getData(), UndervisningsgruppeResource.class);
+        } else {
+            data = objectMapper.convertValue(event.getData(), javaType);
+        }
+        data.forEach(linker::mapLinks);
+        if (TimeplanActions.valueOf(event.getAction()) == TimeplanActions.UPDATE_UNDERVISNINGSGRUPPE) {
+            if (event.getResponseStatus() == ResponseStatus.ACCEPTED || event.getResponseStatus() == ResponseStatus.CONFLICT) {
+                add(event.getOrgId(), data);
+                log.info("Added {} elements to cache for {}", data.size(), event.getOrgId());
+            } else {
+                log.debug("Ignoring payload for {} with response status {}", event.getOrgId(), event.getResponseStatus());
+            }
+        } else {
+            update(event.getOrgId(), data);
+            log.info("Updated cache for {} with {} elements", event.getOrgId(), data.size());
+        }
     }
 }
