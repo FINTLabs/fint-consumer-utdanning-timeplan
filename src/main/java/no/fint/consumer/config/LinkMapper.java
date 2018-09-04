@@ -5,6 +5,7 @@ import no.fint.consumer.utils.RestEndpoints;
 import java.util.Map;
 
 import com.google.common.collect.ImmutableMap;
+import no.fint.model.utdanning.elev.Elevforhold;
 import no.fint.model.utdanning.elev.Medlemskap;
 import no.fint.model.utdanning.elev.Undervisningsforhold;
 import no.fint.model.utdanning.timeplan.Fag;
@@ -27,6 +28,7 @@ public class LinkMapper {
                 .put(Skole.class.getName(), "/utdanning/utdanningsprogram/skole")
                 .put(Eksamensgruppe.class.getName(), "/utdanning/vurdering/eksamensgruppe")
                 .put(Undervisningsforhold.class.getName(), "/utdanning/elev/undervisningsforhold")
+                .put(Elevforhold.class.getName(), "/utdanning/elev/elevforhold")
                 .put(Medlemskap.class.getName(), "/utdanning/elev/medlemskap")
                 .build();
     }
