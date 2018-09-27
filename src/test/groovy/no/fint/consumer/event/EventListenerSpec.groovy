@@ -3,7 +3,6 @@ package no.fint.consumer.event
 import no.fint.audit.FintAuditService
 import no.fint.consumer.status.StatusCache
 import no.fint.event.model.Event
-import no.fint.event.model.ResponseStatus
 import no.fint.event.model.Status
 import spock.lang.Specification
 
@@ -14,13 +13,13 @@ class EventListenerSpec extends Specification {
 
     void setup() {
         fintAuditService = Mock()
-        statusCache = Mock()
+        statusCache = Mock(StatusCache)
         eventListener = new EventListener(cacheServices: [], statusCache: statusCache, fintAuditService: fintAuditService)
     }
 
     def "No exception is thrown when receiving event"() {
         when:
-        eventListener.accept(new Event(corrId: '123', responseStatus: ResponseStatus.ACCEPTED))
+        eventListener.accept(new Event(corrId: '123'))
 
         then:
         noExceptionThrown()

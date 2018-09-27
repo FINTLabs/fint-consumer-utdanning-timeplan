@@ -1,8 +1,16 @@
 package no.fint.consumer.models.time;
 
+import no.fint.model.resource.Link;
 import no.fint.model.resource.utdanning.timeplan.TimeResource;
+import no.fint.model.resource.utdanning.timeplan.TimeResources;
 import no.fint.relations.FintLinker;
 import org.springframework.stereotype.Component;
+
+import java.util.Collection;
+
+import static java.util.Objects.isNull;
+import static org.springframework.util.StringUtils.isEmpty;
+
 
 @Component
 public class TimeLinker extends FintLinker<TimeResource> {
@@ -14,10 +22,18 @@ public class TimeLinker extends FintLinker<TimeResource> {
     public void mapLinks(TimeResource resource) {
         super.mapLinks(resource);
     }
-    
+
+    @Override
+    public TimeResources toResources(Collection<TimeResource> collection) {
+        TimeResources resources = new TimeResources();
+        collection.stream().map(this::toResource).forEach(resources::addResource);
+        resources.addSelf(Link.with(self()));
+        return resources;
+    }
+
     @Override
     public String getSelfHref(TimeResource time) {
-        if (time.getSystemId() != null && time.getSystemId().getIdentifikatorverdi() != null) {
+        if (!isNull(time.getSystemId()) && !isEmpty(time.getSystemId().getIdentifikatorverdi())) {
             return createHrefWithId(time.getSystemId().getIdentifikatorverdi(), "systemid");
         }
         

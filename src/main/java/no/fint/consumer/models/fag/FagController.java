@@ -3,6 +3,7 @@ package no.fint.consumer.models.fag;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.google.common.collect.ImmutableMap;
+import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 
 import no.fint.audit.FintAuditService;
@@ -17,7 +18,6 @@ import no.fint.consumer.utils.RestEndpoints;
 import no.fint.event.model.*;
 
 import no.fint.relations.FintRelationsMediaType;
-import no.fint.relations.FintResources;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,12 +36,14 @@ import java.util.Optional;
 import javax.naming.NameNotFoundException;
 
 import no.fint.model.resource.utdanning.timeplan.FagResource;
+import no.fint.model.resource.utdanning.timeplan.FagResources;
 import no.fint.model.utdanning.timeplan.TimeplanActions;
 
 @Slf4j
+@Api(tags = {"Fag"})
 @CrossOrigin
 @RestController
-@RequestMapping(value = RestEndpoints.FAG, produces = {FintRelationsMediaType.APPLICATION_HAL_JSON_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
+@RequestMapping(name = "Fag", value = RestEndpoints.FAG, produces = {FintRelationsMediaType.APPLICATION_HAL_JSON_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
 public class FagController {
 
     @Autowired
@@ -91,7 +93,7 @@ public class FagController {
     }
 
     @GetMapping
-    public FintResources getFag(
+    public FagResources getFag(
             @RequestHeader(name = HeaderConstants.ORG_ID, required = false) String orgId,
             @RequestHeader(name = HeaderConstants.CLIENT, required = false) String client,
             @RequestParam(required = false) Long sinceTimeStamp) {
