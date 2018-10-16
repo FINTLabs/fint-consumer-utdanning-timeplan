@@ -1,13 +1,18 @@
 package no.fint.consumer.config;
 
 import lombok.Getter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Component
 public class ConsumerProps {
-    
+
     @Value("${fint.consumer.override-org-id:false}")
     private boolean overrideOrgId;
 
@@ -16,22 +21,17 @@ public class ConsumerProps {
 
     @Value("${fint.consumer.default-org-id:fint.no}")
     private String defaultOrgId;
-    
-    @Value("${fint.events.orgIds:fint.no}")
-    private String[] orgs;
 
-    
-    public static final String CACHE_INITIALDELAY_FAG = "${fint.consumer.cache.initialDelay.fag:60000}";
-    public static final String CACHE_FIXEDRATE_FAG = "${fint.consumer.cache.fixedRate.fag:900000}";
-    
-    public static final String CACHE_INITIALDELAY_ROM = "${fint.consumer.cache.initialDelay.rom:70000}";
-    public static final String CACHE_FIXEDRATE_ROM = "${fint.consumer.cache.fixedRate.rom:900000}";
-    
-    public static final String CACHE_INITIALDELAY_TIME = "${fint.consumer.cache.initialDelay.time:80000}";
-    public static final String CACHE_FIXEDRATE_TIME = "${fint.consumer.cache.fixedRate.time:900000}";
-    
-    public static final String CACHE_INITIALDELAY_UNDERVISNINGSGRUPPE = "${fint.consumer.cache.initialDelay.undervisningsgruppe:90000}";
-    public static final String CACHE_FIXEDRATE_UNDERVISNINGSGRUPPE = "${fint.consumer.cache.fixedRate.undervisningsgruppe:900000}";
-    
+    private Set<String> assets;
+
+    @Autowired
+    private void setupOrgs(@Value("${fint.events.orgIds:}") String[] orgs) {
+        assets = new HashSet<>(Arrays.asList(orgs));
+    }
+
+    public String[] getOrgs() {
+        return assets.toArray(new String[0]);
+    }
 
 }
+
