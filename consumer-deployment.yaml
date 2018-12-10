@@ -28,7 +28,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: consumer-utdanning-timeplan
-          image: fintlabs.azurecr.io/consumer-utdanning-timeplan:0.4.6-3.1.0
+          image: fintlabs.azurecr.io/consumer-utdanning-timeplan:0.4.7-3.1.0
           ports:
             - containerPort: 8080
           readinessProbe:
@@ -39,11 +39,11 @@ spec:
               path: /utdanning/timeplan/health
           resources:
             limits:
-              memory: "1Gi"
+              memory: "2Gi"
               cpu: "500m"
             requests:
               cpu: "100m"
-              memory: "256Mi"
+              memory: "1Gi"
           env:
             - name: TZ
               value: Europe/Oslo
