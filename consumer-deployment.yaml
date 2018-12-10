@@ -28,11 +28,11 @@ spec:
       restartPolicy: Always
       containers:
         - name: consumer-utdanning-timeplan
-          image: fintlabs.azurecr.io/consumer-utdanning-timeplan:0.4.7-3.1.0
+          image: fintlabs.azurecr.io/consumer-utdanning-timeplan:0.4.8-3.1.0
           ports:
             - containerPort: 8080
           readinessProbe:
-            initialDelaySeconds: 30
+            initialDelaySeconds: 60
             timeoutSeconds: 5
             httpGet:
               port: 8080
@@ -55,7 +55,7 @@ spec:
                   name: fint-audit
                   key: mongodb
             - name: fint.cache.manager
-              value: hazelcast
+              value: default
             - name: fint.events.orgIds
               value: health.fintlabs.no
             - name: fint.hazelcast.kubernetes.enabled
