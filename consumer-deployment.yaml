@@ -45,7 +45,7 @@ spec:
             - name: TZ
               value: Europe/Oslo
             - name: JAVA_OPTS
-              value: "-Xmx2G"
+              value: "-Xmx1536m"
             - name: fint.audit.mongo.databasename
               value: fint-audit-beta
             - name: fint.audit.mongo.connection-string
@@ -67,5 +67,7 @@ spec:
               value: utdanning-timeplan
             - name: fint.relations.default-base-url
               value: https://beta.felleskomponent.no
+            - name: hazelcast.health.monitoring.level
+              value: "OFF"
             - name: server.context-path
               value: /utdanning/timeplan
