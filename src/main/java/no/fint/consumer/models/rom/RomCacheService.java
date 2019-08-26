@@ -75,7 +75,8 @@ public class RomCacheService extends CacheService<RomResource> {
 		populateCache(orgId);
 	}
 
-    private void populateCache(String orgId) {
+    @Override
+    public void populateCache(String orgId) {
 		log.info("Populating Rom cache for {}", orgId);
         Event event = new Event(orgId, Constants.COMPONENT, TimeplanActions.GET_ALL_ROM, Constants.CACHE_SERVICE);
         consumerEventUtil.send(event);

@@ -75,7 +75,8 @@ public class UndervisningsgruppeCacheService extends CacheService<Undervisningsg
 		populateCache(orgId);
 	}
 
-    private void populateCache(String orgId) {
+    @Override
+    public void populateCache(String orgId) {
 		log.info("Populating Undervisningsgruppe cache for {}", orgId);
         Event event = new Event(orgId, Constants.COMPONENT, TimeplanActions.GET_ALL_UNDERVISNINGSGRUPPE, Constants.CACHE_SERVICE);
         consumerEventUtil.send(event);
