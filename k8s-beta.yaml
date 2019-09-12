@@ -55,7 +55,7 @@ spec:
             - {name: fint.relations.default-base-url, value: 'https://beta.felleskomponent.no'}
             - {name: server.context-path, value: /utdanning/timeplan}
             - {name: spring.mvc.logResolvedException,  value: 'false'}
-          image: fintlabs.azurecr.io/consumer-utdanning-timeplan:PR-2.2
+          image: fintlabs.azurecr.io/consumer-utdanning-timeplan:PR-2.3
           name: consumer-utdanning-timeplan
           ports:
             - {containerPort: 8080}
