@@ -7,6 +7,7 @@ import no.fint.relations.FintLinker;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
+import java.util.stream.IntStream;
 
 import static java.util.Objects.isNull;
 import static org.springframework.util.StringUtils.isEmpty;
@@ -39,6 +40,15 @@ public class RomLinker extends FintLinker<RomResource> {
         
         return null;
     }
-    
+
+    int[] hashCodes(RomResource rom) {
+        IntStream.Builder builder = IntStream.builder();
+        if (!isNull(rom.getSystemId()) && !isEmpty(rom.getSystemId().getIdentifikatorverdi())) {
+            builder.add(rom.getSystemId().getIdentifikatorverdi().hashCode());
+        }
+        
+        return builder.build().toArray();
+    }
+
 }
 
