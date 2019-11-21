@@ -7,6 +7,7 @@ import no.fint.relations.FintLinker;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
+import java.util.stream.IntStream;
 
 import static java.util.Objects.isNull;
 import static org.springframework.util.StringUtils.isEmpty;
@@ -39,6 +40,15 @@ public class TimeLinker extends FintLinker<TimeResource> {
         
         return null;
     }
-    
+
+    int[] hashCodes(TimeResource time) {
+        IntStream.Builder builder = IntStream.builder();
+        if (!isNull(time.getSystemId()) && !isEmpty(time.getSystemId().getIdentifikatorverdi())) {
+            builder.add(time.getSystemId().getIdentifikatorverdi().hashCode());
+        }
+        
+        return builder.build().toArray();
+    }
+
 }
 
