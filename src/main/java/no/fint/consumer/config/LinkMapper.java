@@ -1,13 +1,11 @@
 package no.fint.consumer.config;
 
-import no.fint.consumer.utils.RestEndpoints;
-
-import java.util.Map;
-
 import com.google.common.collect.ImmutableMap;
+import no.fint.consumer.utils.RestEndpoints;
 import no.fint.model.utdanning.elev.Elevforhold;
 import no.fint.model.utdanning.elev.Medlemskap;
 import no.fint.model.utdanning.elev.Undervisningsforhold;
+import no.fint.model.utdanning.kodeverk.Vigoreferanse;
 import no.fint.model.utdanning.timeplan.Fag;
 import no.fint.model.utdanning.timeplan.Rom;
 import no.fint.model.utdanning.timeplan.Time;
@@ -15,6 +13,8 @@ import no.fint.model.utdanning.timeplan.Undervisningsgruppe;
 import no.fint.model.utdanning.utdanningsprogram.Programomrade;
 import no.fint.model.utdanning.utdanningsprogram.Skole;
 import no.fint.model.utdanning.vurdering.Eksamensgruppe;
+
+import java.util.Map;
 
 public class LinkMapper {
 
@@ -30,6 +30,7 @@ public class LinkMapper {
                 .put(Undervisningsforhold.class.getName(), "/utdanning/elev/undervisningsforhold")
                 .put(Elevforhold.class.getName(), "/utdanning/elev/elevforhold")
                 .put(Medlemskap.class.getName(), "/utdanning/elev/medlemskap")
+                .put(Vigoreferanse.class.getName(), "/utdanning/vigo/kodeverk")
                 .build();
     }
 
