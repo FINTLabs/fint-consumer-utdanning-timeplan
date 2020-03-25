@@ -8,10 +8,10 @@ import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import static java.util.Objects.isNull;
 import static org.springframework.util.StringUtils.isEmpty;
-
 
 @Component
 public class RomLinker extends FintLinker<RomResource> {
@@ -34,11 +34,17 @@ public class RomLinker extends FintLinker<RomResource> {
 
     @Override
     public String getSelfHref(RomResource rom) {
+        return getAllSelfHrefs(rom).findFirst().orElse(null);
+    }
+
+    @Override
+    public Stream<String> getAllSelfHrefs(RomResource rom) {
+        Stream.Builder<String> builder = Stream.builder();
         if (!isNull(rom.getSystemId()) && !isEmpty(rom.getSystemId().getIdentifikatorverdi())) {
-            return createHrefWithId(rom.getSystemId().getIdentifikatorverdi(), "systemid");
+            builder.add(createHrefWithId(rom.getSystemId().getIdentifikatorverdi(), "systemid"));
         }
         
-        return null;
+        return builder.build();
     }
 
     int[] hashCodes(RomResource rom) {
