@@ -21,5 +21,8 @@ public enum Constants {
     public static final String CACHE_INITIALDELAY_UNDERVISNINGSGRUPPE = "${fint.consumer.cache.initialDelay.undervisningsgruppe:1080000}";
     public static final String CACHE_FIXEDRATE_UNDERVISNINGSGRUPPE = "${fint.consumer.cache.fixedRate.undervisningsgruppe:900000}";
     
+    public static final String CACHE_INITIALDELAY_UNDERVISNINGSGRUPPEMEDLEMSKAP = "${fint.consumer.cache.initialDelay.undervisningsgruppemedlemskap:1140000}";
+    public static final String CACHE_FIXEDRATE_UNDERVISNINGSGRUPPEMEDLEMSKAP = "${fint.consumer.cache.fixedRate.undervisningsgruppemedlemskap:900000}";
+    
 
 }
