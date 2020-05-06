@@ -8,5 +8,6 @@ public enum RestEndpoints {
 	public static final String ROM = "/rom";
 	public static final String TIME = "/time";
 	public static final String UNDERVISNINGSGRUPPE = "/undervisningsgruppe";
+	public static final String UNDERVISNINGSGRUPPEMEDLEMSKAP = "/undervisningsgruppemedlemskap";
 
 }
