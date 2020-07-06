@@ -34,6 +34,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new RequestHeaderInterceptor(links.values().stream().filter(s -> s.startsWith(contextPath)).collect(Collectors.toList())))
-                .addPathPatterns(links.values().stream().filter(s -> s.startsWith(contextPath)).map(s -> StringUtils.removeStart(s, contextPath)).toArray(String[]::new));
+                .addPathPatterns(links.values().stream().filter(s -> s.startsWith(contextPath)).map(s -> StringUtils.removeStart(s, contextPath) + "/**").toArray(String[]::new));
     }
 }
