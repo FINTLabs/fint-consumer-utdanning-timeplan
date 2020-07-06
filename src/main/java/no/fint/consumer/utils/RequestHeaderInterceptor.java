@@ -32,6 +32,7 @@ public class RequestHeaderInterceptor extends HandlerInterceptorAdapter {
                 final String[] permittedPaths = StringUtils.split(request.getHeader(COLLECTION_HEADER_NAME), ",;");
 
                 if (StringUtils.equalsAny(request.getRequestURI(), permittedPaths)) {
+                    log.trace("{} {} permitted by collection policy", request.getMethod(), request.getRequestURI());
                     return true;
                 }
 
@@ -40,6 +41,7 @@ public class RequestHeaderInterceptor extends HandlerInterceptorAdapter {
                 final String[] permittedPaths = StringUtils.split(request.getHeader(READ_HEADER_NAME), ",;");
 
                 if (StringUtils.startsWithAny(request.getRequestURI(), permittedPaths)) {
+                    log.trace("{} {} permitted by read policy", request.getMethod(), request.getRequestURI());
                     return true;
                 }
             } else {
@@ -50,6 +52,7 @@ public class RequestHeaderInterceptor extends HandlerInterceptorAdapter {
         } else {
             String[] permittedPaths = StringUtils.split(request.getHeader(MODIFY_HEADER_NAME), ",;");
             if (StringUtils.startsWithAny(request.getRequestURI(), permittedPaths)) {
+                log.trace("{} {} permitted by modify policy", request.getMethod(), request.getRequestURI());
                 return true;
             }
 

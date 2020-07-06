@@ -30,7 +30,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new RequestHeaderInterceptor(links.values()))
-                .addPathPatterns(links.values().toArray(new String[0]))
-                .excludePathPatterns(RestEndpoints.ADMIN, "/health");
+                .addPathPatterns(links.values().stream().map(s -> s + "/**").peek(System.out::println).toArray(String[]::new));
     }
 }
