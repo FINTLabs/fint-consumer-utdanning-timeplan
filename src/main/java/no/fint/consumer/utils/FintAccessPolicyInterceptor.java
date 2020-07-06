@@ -10,22 +10,28 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Collection;
 
 @Slf4j
-public class RequestHeaderInterceptor extends HandlerInterceptorAdapter {
+public class FintAccessPolicyInterceptor extends HandlerInterceptorAdapter {
 
     private static final String COLLECTION_HEADER_NAME = "x-fint-access-collection";
     private static final String READ_HEADER_NAME = "x-fint-access-read";
     private static final String MODIFY_HEADER_NAME = "x-fint-access-modify";
     private final Collection<String> paths;
 
-    public RequestHeaderInterceptor(Collection<String> paths) {
+    public FintAccessPolicyInterceptor(Collection<String> paths) {
         this.paths = paths;
     }
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-        log.trace("{} {}", request.getMethod(), request.getRequestURI());
 
-        if (StringUtils.equalsAny(request.getMethod(), "GET", "HEAD")) {
+        if (StringUtils.equalsAny(request.getMethod(), "POST", "PUT", "DELETE")) {
+            String[] permittedPaths = StringUtils.split(request.getHeader(MODIFY_HEADER_NAME), ",;");
+            if (StringUtils.startsWithAny(request.getRequestURI(), permittedPaths)) {
+                log.trace("{} {} permitted by modify policy", request.getMethod(), request.getRequestURI());
+                return true;
+            }
+
+        } else {
 
             if (paths.contains(StringUtils.lowerCase(request.getRequestURI()))) {
 
@@ -46,13 +52,6 @@ public class RequestHeaderInterceptor extends HandlerInterceptorAdapter {
                 }
             } else {
                 log.debug("{} {} not matched", request.getMethod(), request.getRequestURI());
-                return true;
-            }
-
-        } else {
-            String[] permittedPaths = StringUtils.split(request.getHeader(MODIFY_HEADER_NAME), ",;");
-            if (StringUtils.startsWithAny(request.getRequestURI(), permittedPaths)) {
-                log.trace("{} {} permitted by modify policy", request.getMethod(), request.getRequestURI());
                 return true;
             }
 

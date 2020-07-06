@@ -1,6 +1,6 @@
 package no.fint.consumer.config;
 
-import no.fint.consumer.utils.RequestHeaderInterceptor;
+import no.fint.consumer.utils.FintAccessPolicyInterceptor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -33,7 +33,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new RequestHeaderInterceptor(links.values().stream().filter(s -> s.startsWith(contextPath)).collect(Collectors.toList())))
+        registry.addInterceptor(new FintAccessPolicyInterceptor(links.values().stream().filter(s -> s.startsWith(contextPath)).collect(Collectors.toList())))
                 .addPathPatterns(links.values().stream().filter(s -> s.startsWith(contextPath)).map(s -> StringUtils.removeStart(s, contextPath) + "/**").toArray(String[]::new));
     }
 }
