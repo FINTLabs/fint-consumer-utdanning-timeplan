@@ -25,9 +25,14 @@ public class FintAccessPolicyInterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
 
         if (StringUtils.equalsAny(request.getMethod(), "POST", "PUT", "DELETE")) {
-            String[] permittedPaths = StringUtils.split(request.getHeader(MODIFY_HEADER_NAME), ",;");
-            if (StringUtils.startsWithAny(request.getRequestURI(), permittedPaths)) {
-                log.trace("{} {} permitted by modify policy", request.getMethod(), request.getRequestURI());
+            if (paths.stream().anyMatch(s -> StringUtils.startsWith(request.getRequestURI(), s))) {
+                String[] permittedPaths = StringUtils.split(request.getHeader(MODIFY_HEADER_NAME), ",;");
+                if (StringUtils.startsWithAny(request.getRequestURI(), permittedPaths)) {
+                    log.trace("{} {} permitted by modify policy", request.getMethod(), request.getRequestURI());
+                    return true;
+                }
+            } else {
+                log.debug("{} {} not matched", request.getMethod(), request.getRequestURI());
                 return true;
             }
 
