@@ -1,6 +1,5 @@
 package no.fint.consumer.models.fag;
 
-import no.fint.model.resource.Link;
 import no.fint.model.resource.utdanning.timeplan.FagResource;
 import no.fint.model.resource.utdanning.timeplan.FagResources;
 import no.fint.relations.FintLinker;
@@ -26,9 +25,14 @@ public class FagLinker extends FintLinker<FagResource> {
 
     @Override
     public FagResources toResources(Collection<FagResource> collection) {
+        return toResources(collection.stream(), 0, 0, collection.size());
+    }
+
+    @Override
+    public FagResources toResources(Stream<FagResource> stream, int offset, int size, int totalItems) {
         FagResources resources = new FagResources();
-        collection.stream().map(this::toResource).forEach(resources::addResource);
-        resources.addSelf(Link.with(self()));
+        stream.map(this::toResource).forEach(resources::addResource);
+        addPagination(resources, offset, size, totalItems);
         return resources;
     }
 
