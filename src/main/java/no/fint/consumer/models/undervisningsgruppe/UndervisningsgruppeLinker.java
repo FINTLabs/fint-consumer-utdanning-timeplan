@@ -1,6 +1,5 @@
 package no.fint.consumer.models.undervisningsgruppe;
 
-import no.fint.model.resource.Link;
 import no.fint.model.resource.utdanning.timeplan.UndervisningsgruppeResource;
 import no.fint.model.resource.utdanning.timeplan.UndervisningsgruppeResources;
 import no.fint.relations.FintLinker;
@@ -26,9 +25,14 @@ public class UndervisningsgruppeLinker extends FintLinker<UndervisningsgruppeRes
 
     @Override
     public UndervisningsgruppeResources toResources(Collection<UndervisningsgruppeResource> collection) {
+        return toResources(collection.stream(), 0, 0, collection.size());
+    }
+
+    @Override
+    public UndervisningsgruppeResources toResources(Stream<UndervisningsgruppeResource> stream, int offset, int size, int totalItems) {
         UndervisningsgruppeResources resources = new UndervisningsgruppeResources();
-        collection.stream().map(this::toResource).forEach(resources::addResource);
-        resources.addSelf(Link.with(self()));
+        stream.map(this::toResource).forEach(resources::addResource);
+        addPagination(resources, offset, size, totalItems);
         return resources;
     }
 

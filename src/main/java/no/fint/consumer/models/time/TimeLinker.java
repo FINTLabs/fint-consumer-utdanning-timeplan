@@ -1,6 +1,5 @@
 package no.fint.consumer.models.time;
 
-import no.fint.model.resource.Link;
 import no.fint.model.resource.utdanning.timeplan.TimeResource;
 import no.fint.model.resource.utdanning.timeplan.TimeResources;
 import no.fint.relations.FintLinker;
@@ -26,9 +25,14 @@ public class TimeLinker extends FintLinker<TimeResource> {
 
     @Override
     public TimeResources toResources(Collection<TimeResource> collection) {
+        return toResources(collection.stream(), 0, 0, collection.size());
+    }
+
+    @Override
+    public TimeResources toResources(Stream<TimeResource> stream, int offset, int size, int totalItems) {
         TimeResources resources = new TimeResources();
-        collection.stream().map(this::toResource).forEach(resources::addResource);
-        resources.addSelf(Link.with(self()));
+        stream.map(this::toResource).forEach(resources::addResource);
+        addPagination(resources, offset, size, totalItems);
         return resources;
     }
 
