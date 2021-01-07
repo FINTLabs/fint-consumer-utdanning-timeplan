@@ -1,11 +1,15 @@
-package no.fint.consumer.security;
+package no.fint.consumer.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import no.fint.consumer.security.FintAccessDecisionVoter;
+import no.fint.consumer.security.FintAccessUserDetailsService;
+import no.fint.consumer.security.FintRequestHeaderPreauthProcessingFilter;
+import no.fint.consumer.utils.RestEndpoints;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.vote.UnanimousBased;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider;
 
@@ -14,8 +18,10 @@ import java.util.Collections;
 @Configuration
 public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    FintAccessDecisionVoter voter;
+    @Bean
+    FintAccessDecisionVoter fintAccessDecisionVoter() {
+        return new FintAccessDecisionVoter();
+    }
 
     @Bean
     FintRequestHeaderPreauthProcessingFilter fintRequestHeaderPreauthProcessingFilter() throws Exception {
@@ -38,7 +44,14 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
 
     @Bean
     AccessDecisionManager accessDecisionManager() {
-        return new UnanimousBased(Collections.singletonList(voter));
+        return new UnanimousBased(Collections.singletonList(fintAccessDecisionVoter()));
+    }
+
+    @Override
+    public void configure(WebSecurity web) {
+        web.debug(true)
+                .ignoring()
+                .antMatchers(RestEndpoints.ADMIN + "/**");
     }
 
     @Override

@@ -6,11 +6,9 @@ import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.FilterInvocation;
-import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 
-@Service
 @Slf4j
 public class FintAccessDecisionVoter implements AccessDecisionVoter<FilterInvocation> {
     @Override
