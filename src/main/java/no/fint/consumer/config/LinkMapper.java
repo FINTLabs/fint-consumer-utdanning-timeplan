@@ -3,8 +3,11 @@ package no.fint.consumer.config;
 import no.fint.consumer.utils.RestEndpoints;
 import java.util.Map;
 import com.google.common.collect.ImmutableMap;
-
-import no.fint.model.utdanning.timeplan.*;
+import no.fint.model.utdanning.timeplan.Fag;
+import no.fint.model.utdanning.timeplan.Rom;
+import no.fint.model.utdanning.timeplan.Time;
+import no.fint.model.utdanning.timeplan.Undervisningsgruppe;
+import no.fint.model.utdanning.timeplan.Undervisningsgruppemedlemskap;
 
 public class LinkMapper {
 
