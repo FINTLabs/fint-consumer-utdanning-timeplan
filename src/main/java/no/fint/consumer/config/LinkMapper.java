@@ -19,6 +19,7 @@ public class LinkMapper {
             .put(Undervisningsgruppe.class.getName(), contextPath + RestEndpoints.UNDERVISNINGSGRUPPE)
             .put(Undervisningsgruppemedlemskap.class.getName(), contextPath + RestEndpoints.UNDERVISNINGSGRUPPEMEDLEMSKAP)
             .put("no.fint.model.utdanning.utdanningsprogram.Programomrade", "/utdanning/utdanningsprogram/programomrade")
+            .put("no.fint.model.utdanning.elev.Elevtilrettelegging", "/utdanning/elev/elevtilrettelegging")
             .put("no.fint.model.utdanning.utdanningsprogram.Skole", "/utdanning/utdanningsprogram/skole")
             .put("no.fint.model.utdanning.vurdering.Eksamensgruppe", "/utdanning/vurdering/eksamensgruppe")
             .put("no.fint.model.utdanning.elev.Medlemskap", "/utdanning/elev/medlemskap")
