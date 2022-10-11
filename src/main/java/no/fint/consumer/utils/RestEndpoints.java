@@ -5,6 +5,7 @@ public enum RestEndpoints {
 
     public static final String ADMIN = "/admin";
 	public static final String FAG = "/fag";
+	public static final String FAGGRUPPE = "/faggruppe";
 	public static final String FAGGRUPPEMEDLEMSKAP = "/faggruppemedlemskap";
 	public static final String ROM = "/rom";
 	public static final String TIME = "/time";
