@@ -107,7 +107,10 @@ public class UndervisningsgruppeCacheService extends CacheService<Undervisningsg
         } else {
             data = objectMapper.convertValue(event.getData(), javaType);
         }
-        data.forEach(linker::mapLinks);
+        data.forEach(resource -> {
+            linker.mapLinks(resource);
+            linker.resetSelfLinks(resource);
+        });
         if (TimeplanActions.valueOf(event.getAction()) == TimeplanActions.UPDATE_UNDERVISNINGSGRUPPE) {
             if (event.getResponseStatus() == ResponseStatus.ACCEPTED || event.getResponseStatus() == ResponseStatus.CONFLICT) {
                 List<CacheObject<UndervisningsgruppeResource>> cacheObjects = data

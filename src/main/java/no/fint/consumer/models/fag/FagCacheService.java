@@ -107,7 +107,10 @@ public class FagCacheService extends CacheService<FagResource> {
         } else {
             data = objectMapper.convertValue(event.getData(), javaType);
         }
-        data.forEach(linker::mapLinks);
+        data.forEach(resource -> {
+            linker.mapLinks(resource);
+            linker.resetSelfLinks(resource);
+        });
         if (TimeplanActions.valueOf(event.getAction()) == TimeplanActions.UPDATE_FAG) {
             if (event.getResponseStatus() == ResponseStatus.ACCEPTED || event.getResponseStatus() == ResponseStatus.CONFLICT) {
                 List<CacheObject<FagResource>> cacheObjects = data
