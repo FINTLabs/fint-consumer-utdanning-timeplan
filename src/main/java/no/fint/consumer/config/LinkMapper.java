@@ -33,6 +33,7 @@ public class LinkMapper {
             .put("no.fint.model.utdanning.kodeverk.Fagmerknad", "/utdanning/kodeverk/fagmerknad")
             .put("no.fint.model.utdanning.kodeverk.Fagstatus", "/utdanning/kodeverk/fagstatus")
             .put("no.fint.model.utdanning.elev.Elevforhold", "/utdanning/elev/elevforhold")
+            .put("no.fint.model.utdanning.elev.Varsel", "/utdanning/elev/varsel")
             .put("no.fint.model.utdanning.elev.Undervisningsforhold", "/utdanning/elev/undervisningsforhold")
             .put("no.fint.model.utdanning.kodeverk.Termin", "/utdanning/kodeverk/termin")
             /* .put(TODO,TODO) */
