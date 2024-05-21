@@ -107,10 +107,7 @@ public class EksamenCacheService extends CacheService<EksamenResource> {
         } else {
             data = objectMapper.convertValue(event.getData(), javaType);
         }
-        data.forEach(resource -> {
-            linker.mapLinks(resource);
-            linker.resetSelfLinks(resource);
-        });
+        data.forEach(linker::mapLinks);
         if (TimeplanActions.valueOf(event.getAction()) == TimeplanActions.UPDATE_EKSAMEN) {
             if (event.getResponseStatus() == ResponseStatus.ACCEPTED || event.getResponseStatus() == ResponseStatus.CONFLICT) {
                 List<CacheObject<EksamenResource>> cacheObjects = data
