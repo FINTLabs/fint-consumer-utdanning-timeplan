@@ -107,10 +107,7 @@ public class FaggruppemedlemskapCacheService extends CacheService<Faggruppemedle
         } else {
             data = objectMapper.convertValue(event.getData(), javaType);
         }
-        data.forEach(resource -> {
-            linker.mapLinks(resource);
-            linker.resetSelfLinks(resource);
-        });
+        data.forEach(linker::mapLinks);
         if (TimeplanActions.valueOf(event.getAction()) == TimeplanActions.UPDATE_FAGGRUPPEMEDLEMSKAP) {
             if (event.getResponseStatus() == ResponseStatus.ACCEPTED || event.getResponseStatus() == ResponseStatus.CONFLICT) {
                 List<CacheObject<FaggruppemedlemskapResource>> cacheObjects = data
