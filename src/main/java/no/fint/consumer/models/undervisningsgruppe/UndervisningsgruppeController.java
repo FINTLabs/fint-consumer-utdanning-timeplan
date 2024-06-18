@@ -182,7 +182,7 @@ public class UndervisningsgruppeController {
 
             fintAuditService.audit(response, Status.SENT_TO_CLIENT);
 
-            return linker.toResource(undervisningsgruppe);
+            return linker.mapAndResetLinks(undervisningsgruppe);
         }    
     }
 
