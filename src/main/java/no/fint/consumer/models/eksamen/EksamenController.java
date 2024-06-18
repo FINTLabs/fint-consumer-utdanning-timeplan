@@ -182,7 +182,7 @@ public class EksamenController {
 
             fintAuditService.audit(response, Status.SENT_TO_CLIENT);
 
-            return linker.toResource(eksamen);
+            return linker.mapAndResetLinks(eksamen);
         }    
     }
 

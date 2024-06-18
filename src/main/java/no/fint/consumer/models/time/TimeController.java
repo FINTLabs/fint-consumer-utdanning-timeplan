@@ -182,7 +182,7 @@ public class TimeController {
 
             fintAuditService.audit(response, Status.SENT_TO_CLIENT);
 
-            return linker.toResource(time);
+            return linker.mapAndResetLinks(time);
         }    
     }
 
