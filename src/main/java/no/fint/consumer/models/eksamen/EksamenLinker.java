@@ -1,7 +1,7 @@
 package no.fint.consumer.models.eksamen;
 
-import no.fint.model.resource.utdanning.timeplan.EksamenResource;
-import no.fint.model.resource.utdanning.timeplan.EksamenResources;
+import no.novari.fint.model.resource.utdanning.timeplan.EksamenResource;
+import no.novari.fint.model.resource.utdanning.timeplan.EksamenResources;
 import no.fint.relations.FintLinker;
 import org.springframework.stereotype.Component;
 

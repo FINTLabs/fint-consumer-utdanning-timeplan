@@ -1,7 +1,7 @@
 package no.fint.consumer.models.time;
 
-import no.fint.model.resource.utdanning.timeplan.TimeResource;
-import no.fint.model.resource.utdanning.timeplan.TimeResources;
+import no.novari.fint.model.resource.utdanning.timeplan.TimeResource;
+import no.novari.fint.model.resource.utdanning.timeplan.TimeResources;
 import no.fint.relations.FintLinker;
 import org.springframework.stereotype.Component;
 

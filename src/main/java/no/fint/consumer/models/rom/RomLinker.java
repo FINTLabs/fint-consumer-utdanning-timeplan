@@ -1,7 +1,7 @@
 package no.fint.consumer.models.rom;
 
-import no.fint.model.resource.utdanning.timeplan.RomResource;
-import no.fint.model.resource.utdanning.timeplan.RomResources;
+import no.novari.fint.model.resource.utdanning.timeplan.RomResource;
+import no.novari.fint.model.resource.utdanning.timeplan.RomResources;
 import no.fint.relations.FintLinker;
 import org.springframework.stereotype.Component;
 

@@ -43,9 +43,9 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
-import no.fint.model.resource.utdanning.timeplan.FaggruppeResource;
-import no.fint.model.resource.utdanning.timeplan.FaggruppeResources;
-import no.fint.model.utdanning.timeplan.TimeplanActions;
+import no.novari.fint.model.resource.utdanning.timeplan.FaggruppeResource;
+import no.novari.fint.model.resource.utdanning.timeplan.FaggruppeResources;
+import no.novari.fint.model.utdanning.timeplan.TimeplanActions;
 
 @Slf4j
 @Api(tags = {"Faggruppe"})

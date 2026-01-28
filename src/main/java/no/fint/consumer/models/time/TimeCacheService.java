@@ -26,10 +26,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import no.fint.model.utdanning.timeplan.Time;
-import no.fint.model.resource.utdanning.timeplan.TimeResource;
-import no.fint.model.utdanning.timeplan.TimeplanActions;
-import no.fint.model.felles.kompleksedatatyper.Identifikator;
+import no.novari.fint.model.utdanning.timeplan.Time;
+import no.novari.fint.model.resource.utdanning.timeplan.TimeResource;
+import no.novari.fint.model.utdanning.timeplan.TimeplanActions;
+import no.novari.fint.model.felles.kompleksedatatyper.Identifikator;
 
 @Slf4j
 @Service

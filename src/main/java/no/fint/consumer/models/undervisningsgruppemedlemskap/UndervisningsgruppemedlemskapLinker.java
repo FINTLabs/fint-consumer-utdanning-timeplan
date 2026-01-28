@@ -1,7 +1,7 @@
 package no.fint.consumer.models.undervisningsgruppemedlemskap;
 
-import no.fint.model.resource.utdanning.timeplan.UndervisningsgruppemedlemskapResource;
-import no.fint.model.resource.utdanning.timeplan.UndervisningsgruppemedlemskapResources;
+import no.novari.fint.model.resource.utdanning.timeplan.UndervisningsgruppemedlemskapResource;
+import no.novari.fint.model.resource.utdanning.timeplan.UndervisningsgruppemedlemskapResources;
 import no.fint.relations.FintLinker;
 import org.springframework.stereotype.Component;
 
